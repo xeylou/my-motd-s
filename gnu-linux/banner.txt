@@ -1,0 +1,16 @@
+***************************************************************************
+*                                                                         *
+*                        THIS DEVICE IS MONITORED!                        *
+*                                                                         *
+***************************************************************************
+*                                                                         *
+*                      This device is managed by IDK                      *
+*                                                                         *
+*       ** Access to this device is PROHIBITED unless AUTHORIZED **       *
+*         If you are not authorized please disconnect IMMEDIATELY         *
+*                                                                         *
+*   Any attempt for unauthorized access is being logged and appropriate   *
+*                       legal action will be taken.                       *
+*                                                                         *
+*                                                                         *
+***************************************************************************

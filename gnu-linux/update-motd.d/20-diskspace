@@ -32,7 +32,7 @@ for line in "${dfs[@]}"; do
     done
     bar+="${UNDIM}]"
     # affichage des deux
-    echo "${line}" | awk '{ printf("%-31s%+3s utilisé de %+4s\n", $1, $2, $3); }' | sed -e 's/^/  /'
+    echo "${line}" | awk '{ printf("%-31s%+3s utilisé de%+4s\n", $1, $2, $3); }' | sed -e 's/^/  /'
     echo -e "${bar}" | sed -e 's/^/  /'
 done
 printf "\n"

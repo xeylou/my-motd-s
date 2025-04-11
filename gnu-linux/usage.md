@@ -10,3 +10,4 @@ PrintLastLog no
 4. make sure they are executable except the unnecessary ones `chmod 755 [0-3]*`
 5. dependencies `apt install -y figlet bc`
 6. (optional) test/troubleshoot `run-parts /etc/update-motd.d/ > /dev/null`
+7. (optional) remove /etc/motd

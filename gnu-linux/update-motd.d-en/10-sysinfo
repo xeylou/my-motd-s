@@ -1,0 +1,21 @@
+#!/bin/bash
+
+pourcentage='%'
+memfree=`cat /proc/meminfo | grep MemFree | awk {'print $2'}`
+memtotal=`cat /proc/meminfo | grep MemTotal | awk {'print $2'}`
+pmemfree=$(echo "scale=2; $memfree * 100 / $memtotal" |  bc)
+uptime=`uptime -p`
+addrip=`hostname -I | cut -d " " -f1`
+# récupérer loadavg
+read one five fifteen rest < /proc/loadavg
+
+# print variables
+printf "  CPU load : $one (1min) / $five (5min) / $fifteen (15min)"
+printf "\n"
+printf "  IP address : $addrip"
+printf "\n"
+printf "  Free RAM: $(($memfree/1024))MB free ($pmemfree%%) / $(($memtotal/1024))MB"
+printf "\n"
+printf "  Uptime : $uptime"
+printf "\n"
+printf "\n"

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+. /etc/update-motd.d/colors
+
+var=$(cat /etc/*release | grep "PRETTY_NAME" | cut -d "=" -f 2- | sed 's/"//g')
+var2=$(uname -sr)
+
+printf "\n"
+echo "  $var $var2"
+printf "\n"

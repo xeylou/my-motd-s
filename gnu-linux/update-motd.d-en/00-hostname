@@ -1,0 +1,11 @@
+#!/bin/sh
+
+. /etc/update-motd.d/colors
+
+printf "\n"
+printf "\n"$LIGHT_GREEN
+#figlet -w 100 -f /etc/update-motd.d/larry3d.flf " " $(hostname -s)
+figlet -w 120 -f /etc/update-motd.d/big-money-ne.flf " " $(hostname -s)
+printf $NONE
+printf "\n"
+printf "\n"

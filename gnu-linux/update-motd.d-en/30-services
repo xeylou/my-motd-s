@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# nombres de colonnes de services
+COLUMNS=3
+
+# couleurs
+. /etc/update-motd.d/colors
+
+# liste des services
+services=("sshd" "zabbix-agent2" "zabbix-server")
+
+# triés alphabétiquement dans l'ordre croissant
+IFS=$'\n' services=($(sort <<<"${services[*]}"))
+unset IFS
+
+service_status=()
+# obtention du statut des services
+for service in "${services[@]}"; do
+    service_status+=($(systemctl is-active "$service"))
+done
+
+out=""
+for i in ${!services[@]}; do
+    # en vert pour ceux actifs, rouge le reste
+    if [[ "${service_status[$i]}" == "active" ]]; then
+        out+="${services[$i]}:,${GREEN}${service_status[$i]}${UNDIM},"
+    else
+        out+="${services[$i]}:,${RED}${service_status[$i]}${UNDIM},"
+    fi
+    # insère \n toutes les colonnes pour créer une nouvelle ligne
+    if [ $((($i+1) % $COLUMNS)) -eq 0 ]; then
+        out+="\n"
+    fi
+done
+out+="\n"
+
+#printf "\n  Statut des services :\n"
+printf "$out" | column -ts $',' | sed -e 's/^/  /'
+printf "\n"

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# config
+max_usage=90  # rouge au delà de 90% d'utilisation
+bar_width=50  # longueur d'une barre (1 barre 1 partition)
+
+# couleurs
+. /etc/update-motd.d/colors
+
+# ignore partitions zfs, squashfs & tmpfs
+mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x overlay --output=target,pcent,size | tail -n+2)
+
+for line in "${dfs[@]}"; do
+    # récupération de son utilisation
+    usage=$(echo "$line" | awk '{print $2}' | sed 's/%//')
+    used_width=$((($usage*$bar_width)/100))  # nombre de pointillés de la couleur du remplissage
+    # vert si en dessous de max_usage, rouge sinon
+    if [ "${usage}" -ge "${max_usage}" ]; then
+        color=$RED
+    else
+        color=$GREEN
+    fi
+    # les "=" de la couleur voulue
+    bar="[${color}"
+    for ((i=0; i<$used_width; i++)); do
+        bar+="="
+    done
+    # reste de la barre en blanc
+    bar+="${WHITE}${DIM}"
+    for ((i=$used_width; i<$bar_width; i++)); do
+        bar+="="
+    done
+    bar+="${UNDIM}]"
+    # affichage des deux
+    echo "${line}" | awk '{ printf("%-31s%+3s used of%+4s\n", $1, $2, $3); }' | sed -e 's/^/  /'
+    echo -e "${bar}" | sed -e 's/^/  /'
+done
+printf "\n"

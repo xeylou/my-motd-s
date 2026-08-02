@@ -10,6 +10,8 @@ bar_width=50  # longueur d'une barre (1 barre 1 partition)
 # ignore partitions zfs, squashfs & tmpfs
 mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x overlay --output=target,pcent,size | tail -n+2)
 
+echo
+
 for line in "${dfs[@]}"; do
     # récupération de son utilisation
     usage=$(echo "$line" | awk '{print $2}' | sed 's/%//')
